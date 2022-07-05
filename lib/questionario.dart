@@ -10,18 +10,35 @@ class Questionario extends StatelessWidget {
     return _questionsSelected < _questionsAndResponses.length;
   }
 
-  final List<Map<String, Object>> _questionsAndResponses = [
+  final _questionsAndResponses = const [
     {
       'pergunta': 'Qual sua cor favorita?',
-      'resposta': ['Azul', 'Roxo', 'Amarelo', 'Preto']
+      'respostas': [
+        {'resposta': 'Azul', 'nota': 8},
+        {'resposta': 'Roxo', 'nota': 6},
+        {'resposta': 'Amarelo', 'nota': 4},
+        {'resposta': 'Preto', 'nota': 10},
+        {'resposta': 'Lilás', 'nota': 7},
+      ]
     },
     {
       'pergunta': 'Qual seu animal favorito ?',
-      'resposta': ['Cavalo', 'Leão', 'Onça', 'Águia']
+      'respostas': [
+        {'resposta': 'Cavalo', 'nota': 9},
+        {'resposta': 'Onça', 'nota': 10},
+        {'resposta': 'Jacaré', 'nota': 8},
+        {'resposta': 'Águia', 'nota': 7},
+        {'resposta': 'Pavão', 'nota': 6},
+      ]
     },
     {
       'pergunta': 'Qual seu instrutor favorito ?',
-      'resposta': ['Huguinho', 'Zezinho', 'Joãozinho', 'Luizinho']
+      'respostas': [
+        {'resposta': 'Huguinho', 'nota': 10},
+        {'resposta': 'Zezinho', 'nota': 5},
+        {'resposta': 'Luizinho', 'nota': 6},
+        {'resposta': 'Juninho', 'nota': 7},
+      ]
     },
   ];
   final int _questionsSelected;
@@ -29,8 +46,9 @@ class Questionario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> responses =
-        _showQuestion ? _questionsAndResponses[_questionsSelected]['resposta'] as List<String> : [];
+    List<Map<String, Object>> responses = (_showQuestion
+        ? _questionsAndResponses[_questionsSelected]['respostas'] as List<Map<String, Object>>
+        : []) ;
 
     return _showQuestion
         ? Column(
@@ -45,7 +63,8 @@ class Questionario extends StatelessWidget {
 
   String _convertToString(Object list) => list.toString();
 
-  List<Resposta> showResponse(List<String> respostas, void Function() responder) {
-    return respostas.map((resposta) => Resposta(resposta, responder)).toList();
+  List<Resposta> showResponse(List<Map<String, Object>> respostas, void Function()
+  responder) {
+    return respostas.map((resposta) => Resposta(resposta['resposta'].toString(), responder)).toList();
   }
 }
